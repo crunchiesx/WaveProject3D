@@ -130,12 +130,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1478881067764543679}
-  - component: {fileID: 6350276167062632353}
+  - component: {fileID: 6846950666678807363}
   - component: {fileID: 9193134683895641612}
   - component: {fileID: 8693417018869371058}
   - component: {fileID: 6187529040245986304}
   m_Layer: 0
-  m_Name: Pickup_Pistol_M1911
+  m_Name: World_Pistol_M1911
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,7 +157,7 @@ Transform:
   - {fileID: 3852055339410541526}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 45, z: 90}
---- !u!114 &6350276167062632353
+--- !u!114 &6846950666678807363
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,10 +166,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5853976912797445374}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb03aa2351df5f54f80bfdbf8a4e58b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 574ff97ec09358c4d893df2ac22652c2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupItem
-  itemSO: {fileID: 11400000, guid: 26aabb76b6fac39458b4cb483130773c, type: 2}
+  m_EditorClassIdentifier: Assembly-CSharp::WorldWeapon
+  weaponItemSO: {fileID: 11400000, guid: 5034498195aeaf84e81dcd1df4802691, type: 2}
 --- !u!114 &9193134683895641612
 MonoBehaviour:
   m_ObjectHideFlags: 0

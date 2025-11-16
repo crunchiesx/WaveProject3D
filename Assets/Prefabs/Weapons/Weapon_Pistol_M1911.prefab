@@ -66,7 +66,7 @@ GameObject:
   - component: {fileID: 5613357394789408790}
   - component: {fileID: 8519433988468515000}
   m_Layer: 0
-  m_Name: Pistol_M1911
+  m_Name: Weapon_Pistol_M1911
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,13 +103,14 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 1021192578285857510, guid: 3848eefc95e1003449773d6c9d312261, type: 3}
   _bulletSpawn: {fileID: 6170893424222579860}
   _muzzleEffect: {fileID: 8981306494543364960}
+  weaponItemSO: {fileID: 11400000, guid: 5034498195aeaf84e81dcd1df4802691, type: 2}
   _shootSound: {fileID: 8300000, guid: f37f7caf22bfcdf469ac9470443d406e, type: 3}
   _reloadSound: {fileID: 8300000, guid: 909e0bce64ada124d8c0068cd1a7694b, type: 3}
   _emptySound: {fileID: 8300000, guid: 8e93e2d759e18384db7c962fa4b7622b, type: 3}
   _shootingMode: 0
   _shootingDelay: 0.18
   _spreadIntensity: 0.025
-  _bulletVelocity: 500
+  _bulletVelocity: 250
   _bulletLifeTime: 3
   _magazineSize: 7
   _reloadTime: 1.5

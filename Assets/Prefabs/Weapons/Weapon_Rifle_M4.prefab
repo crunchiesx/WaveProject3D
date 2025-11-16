@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7494037856888616730}
   - component: {fileID: 7516122247614837338}
   m_Layer: 0
-  m_Name: Rifle_M4
+  m_Name: Weapon_Rifle_M4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,20 +48,19 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 1021192578285857510, guid: 3848eefc95e1003449773d6c9d312261, type: 3}
   _bulletSpawn: {fileID: 1121803451707735981}
   _muzzleEffect: {fileID: 4799026395363627216}
+  weaponItemSO: {fileID: 11400000, guid: 50f1dc9148a4c7745b54b08c3c069562, type: 2}
   _shootSound: {fileID: 8300000, guid: c6008ed325cfbed4589466e4db8ce424, type: 3}
   _reloadSound: {fileID: 8300000, guid: 7a59817b2e6e4b1499a694c71f12ed4f, type: 3}
   _emptySound: {fileID: 8300000, guid: 8e93e2d759e18384db7c962fa4b7622b, type: 3}
   _shootingMode: 2
   _shootingDelay: 0.1
   _spreadIntensity: 0.025
-  _bulletVelocity: 500
+  _bulletVelocity: 250
   _bulletLifeTime: 3
   _magazineSize: 30
   _reloadTime: 2
-  position: {x: 0, y: 0, z: 0}
-  rotation: {x: 0, y: 0, z: 0}
-  _bulletsPerBurst: 1
-  _burstDelay: 0.1
+  _bulletsPerBurst: 0
+  _burstDelay: 0
 --- !u!1 &1373449925532674262
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,8 @@ public class GameInputHandler : MonoBehaviour
 
     public Action OnReloadAction;
     public Action OnInteractAction;
+    public Action OnFirstSlotAction;
+    public Action OnSecondSlotAction;
 
     private void Awake()
     {
@@ -54,6 +56,10 @@ public class GameInputHandler : MonoBehaviour
 
         // Interact
         _inputActions.Player.Interact.performed += ctx => OnInteractAction?.Invoke();
+
+        // Change Slots
+        _inputActions.Player.FirstSlot.performed += ctx => OnFirstSlotAction?.Invoke();
+        _inputActions.Player.SecondSlot.performed += ctx => OnSecondSlotAction?.Invoke();
     }
 
     public Vector2 GetMovementVector() => _inputActions.Player.Movement.ReadValue<Vector2>();

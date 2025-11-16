@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10bea3a718a6ca845a26561e6c31e607, type: 3}
+  m_Name: Pistol_M1911
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponItemSO
+  weaponObject: {fileID: 3499848039710147479, guid: d0ae7e88bcc01df40916ac9a31100280, type: 3}
+  worldObject: {fileID: 5853976912797445374, guid: 90ce7ccbab9195847bff47e016d303ad, type: 3}

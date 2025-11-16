@@ -154,6 +154,24 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FirstSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""7beb69e4-23e3-4465-b06f-bfc8e15d2e8b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SecondSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""01cbfde5-c54c-4b30-a05b-f151e1726130"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -277,6 +295,28 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""67da581a-8b45-4a43-8748-6fefe1ced087"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FirstSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d57f2817-a906-4395-bd5f-d03e35f0222a"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -292,6 +332,8 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_FirstSlot = m_Player.FindAction("FirstSlot", throwIfNotFound: true);
+        m_Player_SecondSlot = m_Player.FindAction("SecondSlot", throwIfNotFound: true);
     }
 
     ~@GameInputActions()
@@ -379,6 +421,8 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_FirstSlot;
+    private readonly InputAction m_Player_SecondSlot;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -418,6 +462,14 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Interact".
         /// </summary>
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/FirstSlot".
+        /// </summary>
+        public InputAction @FirstSlot => m_Wrapper.m_Player_FirstSlot;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SecondSlot".
+        /// </summary>
+        public InputAction @SecondSlot => m_Wrapper.m_Player_SecondSlot;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -465,6 +517,12 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @FirstSlot.started += instance.OnFirstSlot;
+            @FirstSlot.performed += instance.OnFirstSlot;
+            @FirstSlot.canceled += instance.OnFirstSlot;
+            @SecondSlot.started += instance.OnSecondSlot;
+            @SecondSlot.performed += instance.OnSecondSlot;
+            @SecondSlot.canceled += instance.OnSecondSlot;
         }
 
         /// <summary>
@@ -497,6 +555,12 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @FirstSlot.started -= instance.OnFirstSlot;
+            @FirstSlot.performed -= instance.OnFirstSlot;
+            @FirstSlot.canceled -= instance.OnFirstSlot;
+            @SecondSlot.started -= instance.OnSecondSlot;
+            @SecondSlot.performed -= instance.OnSecondSlot;
+            @SecondSlot.canceled -= instance.OnSecondSlot;
         }
 
         /// <summary>
@@ -586,5 +650,19 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteract(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "FirstSlot" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnFirstSlot(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SecondSlot" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSecondSlot(InputAction.CallbackContext context);
     }
 }
