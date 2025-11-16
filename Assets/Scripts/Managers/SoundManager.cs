@@ -9,6 +9,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource _audioSourcePrefab;
     [SerializeField] private int _poolSize = 10;
 
+    private List<AudioSource> _activeSources = new List<AudioSource>();
     private Queue<AudioSource> _audioPool = new Queue<AudioSource>();
 
     private void Awake()
@@ -24,11 +25,12 @@ public class SoundManager : MonoBehaviour
         {
             var source = Instantiate(_audioSourcePrefab, transform);
             source.playOnAwake = false;
+            source.spatialBlend = 1f; // make 3D
             _audioPool.Enqueue(source);
         }
     }
 
-    public void PlayAudio(AudioClip clip, Transform parentTransform)
+    public void PlayAudio(AudioClip clip, Transform followTransform = null, float volume = 1f)
     {
         if (clip == null) return;
 
@@ -39,23 +41,51 @@ public class SoundManager : MonoBehaviour
         }
         else
         {
-            source = Instantiate(_audioSourcePrefab);
+            source = Instantiate(_audioSourcePrefab, transform);
         }
 
-        source.playOnAwake = false;
-        source.transform.SetParent(parentTransform, false);
-        source.pitch = Random.Range(0.9f, 1.1f);
-        source.PlayOneShot(clip);
+        source.clip = clip;
+        source.volume = volume;
+        source.pitch = Random.Range(0.95f, 1.05f);
+        source.transform.SetParent(transform, false);
 
-        StartCoroutine(ReturnToPool(source));
+        if (followTransform != null)
+        {
+            source.transform.position = followTransform.position;
+            _activeSources.Add(source);
+        }
+
+        source.Play();
+
+        StartCoroutine(ReturnToPoolAfterPlaying(source, followTransform));
     }
 
-    private IEnumerator ReturnToPool(AudioSource source)
+    private IEnumerator ReturnToPoolAfterPlaying(AudioSource source, Transform follow)
     {
-        yield return new WaitWhile(() => source.isPlaying);
+        while (source.isPlaying)
+        {
+            if (follow != null)
+            {
+                source.transform.position = follow.position;
+            }
+            yield return null;
+        }
 
-        source.transform.SetParent(transform, false);
+        source.clip = null;
         source.pitch = 1f;
+        source.transform.SetParent(transform, false);
         _audioPool.Enqueue(source);
+        _activeSources.Remove(source);
+    }
+
+    public void StopSoundsFollowing(Transform followTransform)
+    {
+        for (int i = _activeSources.Count - 1; i >= 0; i--)
+        {
+            if (_activeSources[i] != null && _activeSources[i].transform.position == followTransform.position)
+            {
+                _activeSources[i].Stop();
+            }
+        }
     }
 }

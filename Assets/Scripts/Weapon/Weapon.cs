@@ -33,7 +33,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float _reloadTime = 1.5f;
 
     [Header("Burst Settings")]
-    [SerializeField][Min(1)] private int _bulletsPerBurst = 1;
+    [SerializeField][Min(1)] private int _bulletsPerBurst = 3;
     [SerializeField] private float _burstDelay = 0.1f;
 
     public int MagazineSize => _magazineSize;
@@ -113,6 +113,8 @@ public class Weapon : MonoBehaviour
             StopCoroutine(_currentShootingCoroutine);
             _currentShootingCoroutine = null;
         }
+
+        SoundManager.Instance.StopSoundsFollowing(transform);
     }
 
     private void HandleShootInput(bool isPressed)
@@ -155,7 +157,7 @@ public class Weapon : MonoBehaviour
                 TryShoot();
                 break;
             case ShootingMode.Burst:
-                _currentShootingCoroutine = StartCoroutine(FireBurst());
+                _currentShootingCoroutine = StartCoroutine(FireBurstOnce());
                 break;
             case ShootingMode.Auto:
                 _currentShootingCoroutine = StartCoroutine(AutoFire());
@@ -165,6 +167,7 @@ public class Weapon : MonoBehaviour
 
     private void TryShoot()
     {
+        if (_isReloading) return;
         if (Time.time < _nextAllowedShootTime || BulletsLeft <= 0) return;
 
         FireWeapon();
@@ -180,20 +183,19 @@ public class Weapon : MonoBehaviour
         }
 
         if (BulletsLeft <= 0)
-        {
             SoundManager.Instance.PlayAudio(_emptySound, transform);
-        }
     }
 
-    private IEnumerator FireBurst()
+    private IEnumerator FireBurstOnce()
     {
         if (_isReloading || BulletsLeft <= 0) yield break;
 
-        for (int i = 0; i < _bulletsPerBurst; i++)
+        int bulletsToFire = Mathf.Min(_bulletsPerBurst, BulletsLeft);
+        for (int i = 0; i < bulletsToFire; i++)
         {
             if (_isReloading || BulletsLeft <= 0) break;
 
-            TryShoot();
+            FireWeapon();
             yield return new WaitForSeconds(_burstDelay);
         }
 
