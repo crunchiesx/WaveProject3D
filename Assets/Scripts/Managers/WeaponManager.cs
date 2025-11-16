@@ -86,6 +86,7 @@ public class WeaponManager : MonoBehaviour
             {
                 if (_currentWeapon == null) return;
                 _currentWeapon.IsActiveWeapon = false;
+                HandleAmmoCountChange();
             }
         }
         else if (slot == 2)
@@ -101,11 +102,12 @@ public class WeaponManager : MonoBehaviour
             {
                 if (_currentWeapon == null) return;
                 _currentWeapon.IsActiveWeapon = false;
+                HandleAmmoCountChange();
             }
         }
     }
 
-    private void HandleAmmoCountChange(int count, int size)
+    private void HandleAmmoCountChange(int count = 0, int size = 0)
     {
         OnAmmoCountChange?.Invoke(count, size);
     }
