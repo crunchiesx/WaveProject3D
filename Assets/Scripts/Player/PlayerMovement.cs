@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
         _controller.Move(_velocity * Time.deltaTime);
 
-        if (_lastPosition != transform.position && _isGrounded)
+        if (_lastPosition != transform.position)
         {
             _isMoving = true;
         }
@@ -69,6 +69,8 @@ public class PlayerMovement : MonoBehaviour
         {
             _isMoving = false;
         }
+
+        _lastPosition = transform.position;
     }
 
     private void OnDrawGizmos()
