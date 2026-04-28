@@ -11,7 +11,8 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private Transform firstWeaponSlot;
     [SerializeField] private Transform secondWeaponSlot;
 
-    public Action<int, int> OnAmmoCountChange;
+    public Action<int, int> OnCurrentWeaponAmmoCountChange;
+    public Action<float, float> OnCurrentWeaponFire;
 
     private Weapon _currentWeapon;
 
@@ -37,14 +38,16 @@ public class WeaponManager : MonoBehaviour
     {
         if (_currentWeapon != null)
         {
-            _currentWeapon.OnWeaponAmmoCountChange -= HandleAmmoCountChange;
+            _currentWeapon.OnWeaponAmmoCountChange -= HandleCurrentWeaponAmmoCountChange;
+            _currentWeapon.OnWeaponFire -= HandleCurrentWeaponFire;
             _currentWeapon.IsActiveWeapon = false;
         }
 
         _currentWeapon = weapon;
         _currentWeapon.IsActiveWeapon = true;
-        _currentWeapon.OnWeaponAmmoCountChange += HandleAmmoCountChange;
-        HandleAmmoCountChange(weapon.BulletsLeft, weapon.MagazineSize);
+        _currentWeapon.OnWeaponAmmoCountChange += HandleCurrentWeaponAmmoCountChange;
+        _currentWeapon.OnWeaponFire += HandleCurrentWeaponFire;
+        HandleCurrentWeaponAmmoCountChange(weapon.BulletsLeft, weapon.MagazineSize);
     }
 
     public void PickUpWeapon(WeaponItemSO weaponItemSO, GameObject caller)
@@ -86,7 +89,7 @@ public class WeaponManager : MonoBehaviour
             {
                 if (_currentWeapon == null) return;
                 _currentWeapon.IsActiveWeapon = false;
-                HandleAmmoCountChange();
+                HandleCurrentWeaponAmmoCountChange();
             }
         }
         else if (slot == 2)
@@ -102,13 +105,18 @@ public class WeaponManager : MonoBehaviour
             {
                 if (_currentWeapon == null) return;
                 _currentWeapon.IsActiveWeapon = false;
-                HandleAmmoCountChange();
+                HandleCurrentWeaponAmmoCountChange();
             }
         }
     }
 
-    private void HandleAmmoCountChange(int count = 0, int size = 0)
+    private void HandleCurrentWeaponAmmoCountChange(int count = 0, int size = 0)
     {
-        OnAmmoCountChange?.Invoke(count, size);
+        OnCurrentWeaponAmmoCountChange?.Invoke(count, size);
+    }
+
+    private void HandleCurrentWeaponFire(float recoilIntensityX, float recoilIntensityY)
+    {
+        OnCurrentWeaponFire?.Invoke(recoilIntensityX, recoilIntensityY);
     }
 }

@@ -2806,7 +2806,7 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
-  m_Antialiasing: 3
+  m_Antialiasing: 2
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -3052,6 +3052,10 @@ MonoBehaviour:
   _mouseSensitivity: 10
   _topClamp: -90
   _bottomClamp: 90
+  _recoilRotationSpeed: 15
+  _recoilReturnSpeed: 10
+  _currentRecoilRotation: {x: 0, y: 0, z: 0}
+  _targetRecoilRotation: {x: 0, y: 0, z: 0}
 --- !u!43 &416769953
 Mesh:
   m_ObjectHideFlags: 0

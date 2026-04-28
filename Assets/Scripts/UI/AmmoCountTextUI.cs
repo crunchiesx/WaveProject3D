@@ -9,7 +9,7 @@ public class AmmoCountTextUI : MonoBehaviour
 
     private void Start()
     {
-        WeaponManager.Instance.OnAmmoCountChange += WeaponManager_OnAmmoCountChange;
+        WeaponManager.Instance.OnCurrentWeaponAmmoCountChange += WeaponManager_OnAmmoCountChange;
     }
 
     private void WeaponManager_OnAmmoCountChange(int count, int size)
@@ -19,6 +19,6 @@ public class AmmoCountTextUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        WeaponManager.Instance.OnAmmoCountChange -= WeaponManager_OnAmmoCountChange;
+        WeaponManager.Instance.OnCurrentWeaponAmmoCountChange -= WeaponManager_OnAmmoCountChange;
     }
 }

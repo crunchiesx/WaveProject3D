@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour
     public enum ShootingMode { Single, Burst, Auto }
 
     public Action<int, int> OnWeaponAmmoCountChange;
+    public Action<float, float> OnWeaponFire;
 
     [Header("References")]
     [SerializeField] private GameObject _bulletPrefab;
@@ -23,6 +24,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] private ShootingMode _shootingMode = ShootingMode.Single;
     [SerializeField] private float _shootingDelay = 0.25f;
     [SerializeField] private float _spreadIntensity = 0.25f;
+    [SerializeField] private float _recoilIntensityX = 2f;
+    [SerializeField] private float _recoilIntensityY = 0.5f;
 
     [Header("Bullet Settings")]
     [SerializeField] private float _bulletVelocity = 500f;
@@ -220,6 +223,8 @@ public class Weapon : MonoBehaviour
         rb.AddForce(shootDirection * _bulletVelocity, ForceMode.Impulse);
 
         StartCoroutine(DestroyBulletAfterTime(bullet, _bulletLifeTime));
+
+        OnWeaponFire?.Invoke(_recoilIntensityX, _recoilIntensityY);
     }
 
     private Vector3 CalculateDirectionAndSpread()

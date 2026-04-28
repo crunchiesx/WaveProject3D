@@ -110,12 +110,12 @@ MonoBehaviour:
   _shootingMode: 0
   _shootingDelay: 0.18
   _spreadIntensity: 0.025
+  _recoilIntensityX: 5
+  _recoilIntensityY: 2
   _bulletVelocity: 250
   _bulletLifeTime: 3
   _magazineSize: 7
   _reloadTime: 1.5
-  position: {x: 0, y: 0, z: 0}
-  rotation: {x: 0, y: 0, z: 0}
   _bulletsPerBurst: 1
   _burstDelay: 0
 --- !u!1 &5201699002707339843
@@ -206,6 +206,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &6613271997935034549
 GameObject:
@@ -327,6 +328,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &6976128228728115819
 GameObject:
@@ -416,6 +418,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7108419539707235642
 GameObject:
@@ -510,6 +513,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7798974530205345760
 GameObject:
@@ -599,6 +603,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1001 &7065880750409323889
 PrefabInstance:
