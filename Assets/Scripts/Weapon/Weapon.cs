@@ -132,12 +132,16 @@ public class Weapon : MonoBehaviour
     private void Update()
     {
         if (_fireHeld && !_isReloading && BulletsLeft > 0)
+        {
             return;
+        }
 
-        _currentSpreadIntensity = Mathf.MoveTowards(
+        _currentSpreadIntensity = Mathf.MoveTowards
+        (
             _currentSpreadIntensity,
             _spreadIntensity,
-            _spreadRecoverySpeed * Time.deltaTime);
+            _spreadRecoverySpeed * Time.deltaTime
+        );
     }
 
     private void HandleShootInput(bool isPressed)
