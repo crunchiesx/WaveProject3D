@@ -23,9 +23,14 @@ public class Weapon : MonoBehaviour
     [Header("Weapon Settings")]
     [SerializeField] private ShootingMode _shootingMode = ShootingMode.Single;
     [SerializeField] private float _shootingDelay = 0.25f;
-    [SerializeField] private float _spreadIntensity = 0.25f;
     [SerializeField] private float _recoilIntensityX = 2f;
     [SerializeField] private float _recoilIntensityY = 0.5f;
+
+    [Header("Spread Settings")]
+    [SerializeField] private float _spreadIntensity = 0.0025f;
+    [SerializeField] private float _maxSpreadIntensity = 0.025f;
+    [SerializeField] private float _spreadIncreasePerShot = 0.05f;
+    [SerializeField] private float _spreadRecoverySpeed = 1.5f;
 
     [Header("Bullet Settings")]
     [SerializeField] private float _bulletVelocity = 500f;
@@ -68,6 +73,7 @@ public class Weapon : MonoBehaviour
     private Coroutine _currentShootingCoroutine;
 
     private float _nextAllowedShootTime;
+    private float _currentSpreadIntensity;
 
     private readonly int TriggerRecoil = Animator.StringToHash("Recoil");
     private readonly int TriggerReload = Animator.StringToHash("Reload");
@@ -77,6 +83,7 @@ public class Weapon : MonoBehaviour
         _weaponAnimator = GetComponentInChildren<Animator>();
         _weaponAnimator.writeDefaultValuesOnDisable = true;
         BulletsLeft = _magazineSize;
+        _currentSpreadIntensity = _spreadIntensity;
     }
 
     private void Start()
@@ -103,6 +110,7 @@ public class Weapon : MonoBehaviour
         _weaponAnimator.ResetTrigger(TriggerReload);
         _weaponAnimator.ResetTrigger(TriggerRecoil);
         _weaponAnimator.Play(0, 0, 0f);
+        _currentSpreadIntensity = _spreadIntensity;
     }
 
     private void OnDisable()
@@ -110,6 +118,7 @@ public class Weapon : MonoBehaviour
         _isReloading = false;
         _isShooting = false;
         _fireHeld = false;
+        _currentSpreadIntensity = _spreadIntensity;
 
         if (_currentShootingCoroutine != null)
         {
@@ -118,6 +127,17 @@ public class Weapon : MonoBehaviour
         }
 
         SoundManager.Instance.StopSoundsFollowing(transform);
+    }
+
+    private void Update()
+    {
+        if (_fireHeld && !_isReloading && BulletsLeft > 0)
+            return;
+
+        _currentSpreadIntensity = Mathf.MoveTowards(
+            _currentSpreadIntensity,
+            _spreadIntensity,
+            _spreadRecoverySpeed * Time.deltaTime);
     }
 
     private void HandleShootInput(bool isPressed)
@@ -215,6 +235,7 @@ public class Weapon : MonoBehaviour
         SoundManager.Instance.PlayAudio(_shootSound, _bulletSpawn);
 
         BulletsLeft--;
+        _currentSpreadIntensity = Mathf.Min(_currentSpreadIntensity + _spreadIncreasePerShot, _maxSpreadIntensity);
 
         Vector3 shootDirection = CalculateDirectionAndSpread().normalized;
         GameObject bullet = Instantiate(_bulletPrefab, _bulletSpawn.position, Quaternion.identity);
@@ -232,8 +253,8 @@ public class Weapon : MonoBehaviour
         Ray ray = _playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         Vector3 targetPoint = Physics.Raycast(ray, out RaycastHit hit) ? hit.point : ray.GetPoint(100);
 
-        float spreadX = UnityEngine.Random.Range(-_spreadIntensity, _spreadIntensity);
-        float spreadY = UnityEngine.Random.Range(-_spreadIntensity, _spreadIntensity);
+        float spreadX = UnityEngine.Random.Range(-_currentSpreadIntensity, _currentSpreadIntensity);
+        float spreadY = UnityEngine.Random.Range(-_currentSpreadIntensity, _currentSpreadIntensity);
 
         Vector3 offset = (_playerCamera.transform.right * spreadX + _playerCamera.transform.up * spreadY) * Vector3.Distance(_playerCamera.transform.position, targetPoint);
         return (targetPoint + offset - _bulletSpawn.position).normalized;

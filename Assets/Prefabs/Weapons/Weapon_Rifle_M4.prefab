@@ -54,9 +54,12 @@ MonoBehaviour:
   _emptySound: {fileID: 8300000, guid: 8e93e2d759e18384db7c962fa4b7622b, type: 3}
   _shootingMode: 2
   _shootingDelay: 0.1
-  _spreadIntensity: 0.025
   _recoilIntensityX: 5
   _recoilIntensityY: 2
+  _spreadIntensity: 0.0015
+  _maxSpreadIntensity: 0.035
+  _spreadIncreasePerShot: 0.01
+  _spreadRecoverySpeed: 0.08
   _bulletVelocity: 250
   _bulletLifeTime: 3
   _magazineSize: 30
