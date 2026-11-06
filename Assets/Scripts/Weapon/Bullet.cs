@@ -2,23 +2,19 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision other)
+    [SerializeField] private LayerMask hittableLayers;
+
+    private async void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Target"))
+        if ((hittableLayers.value & (1 << other.gameObject.layer)) != 0)
         {
             CreateBulletImpactEffect(other);
             Destroy(gameObject);
         }
 
-        if (other.gameObject.CompareTag("Wall"))
+        if (other.gameObject.TryGetComponent(out BreakableObject breakableObject))
         {
-            CreateBulletImpactEffect(other);
-            Destroy(gameObject);
-        }
-
-        if (other.gameObject.CompareTag("Breakable"))
-        {
-            other.gameObject.GetComponent<BreakableObject>().BreakObject();
+            await breakableObject.BreakObject();
         }
     }
 

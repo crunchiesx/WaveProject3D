@@ -1,15 +1,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class BreakableObject : MonoBehaviour
 {
-    [SerializeField] private List<Rigidbody> _allParts;
+    [SerializeField] private List<Rigidbody> allParts;
+    [SerializeField] private float destroyTime = 5f;
 
-    public void BreakObject()
+    private Collider _collider;
+
+    private void Awake()
     {
-        foreach (Rigidbody part in _allParts)
+        _collider = GetComponent<Collider>();
+    }
+
+    public async Awaitable BreakObject()
+    {
+        foreach (Rigidbody part in allParts)
         {
             part.isKinematic = false;
         }
+
+        await Awaitable.WaitForSecondsAsync(0.1f);
+
+        _collider.enabled = false;
+
+        DestroyAfterTime(destroyTime);
+    }
+
+    private void DestroyAfterTime(float time)
+    {
+        Destroy(gameObject, time);
     }
 }
